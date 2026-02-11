@@ -1,0 +1,82 @@
+# Configuración de la aplicación
+spring:
+  application:
+    name: SistemaGestionVentas
+
+  # Configuración de Base de Datos MySQL
+  datasource:
+    url: jdbc:mysql://localhost:3306/inventario_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: rootpassword
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 30000
+
+  # Configuración JPA/Hibernate
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+        jdbc:
+          batch_size: 20
+        temp:
+          use_jdbc_metadata_defaults: false
+    open-in-view: false
+
+  # Inicialización de datos
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:data.sql
+      continue-on-error: false
+
+# Configuración del servidor
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+  error:
+    include-message: always
+    include-binding-errors: always
+
+# Configuración de logging
+logging:
+  level:
+    com.inventory: DEBUG
+    org.springframework.security: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+# Configuración JWT
+jwt:
+  secret: miClaveSecretaMuySeguraQueDebeSerLargaParaHS512AlMenos64Caracteres1234567890
+  expiration: 86400000
+
+# Configuración Swagger/OpenAPI
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+
+# Configuración de validación
+jakarta:
+  validation:
+    constraints:
+      Max:
+        message: "El valor debe ser menor o igual a {value}"
+      Min:
+        message: "El valor debe ser mayor o igual a {value}"
+      NotBlank:
+        message: "El campo no puede estar vacío"
+      NotNull:
+        message: "El campo es requerido"
