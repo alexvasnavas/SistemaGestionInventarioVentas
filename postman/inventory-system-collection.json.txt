@@ -1,0 +1,95 @@
+{
+  "info": {
+    "name": "Sistema de Inventario y Ventas",
+    "description": "Colección completa de endpoints para la API REST de gestión de inventario, ventas y autenticación",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "item": [
+    {
+      "name": "🔐 1. Autenticación",
+      "item": [
+        {
+          "name": "Registro de Usuario",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/register",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"usuario@email.com\",\n    \"password\": \"123456\",\n    \"nombre\": \"Juan\",\n    \"apellido\": \"Pérez\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Iniciar Sesión",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/login",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"admin@inventory.com\",\n    \"password\": \"123456\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📦 2. Categorías",
+      "item": [
+        {
+          "name": "Listar Categorías",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/categorias"
+          }
+        }
+      ]
+    },
+    {
+      "name": "📱 3. Productos",
+      "item": [
+        {
+          "name": "Listar Productos",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/productos?page=0&size=10"
+          }
+        }
+      ]
+    },
+    {
+      "name": "💰 4. Ventas",
+      "item": [
+        {
+          "name": "Procesar Venta",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/ventas",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"items\": [\n        {\n            \"productoId\": 1,\n            \"cantidad\": 2\n        }\n    ]\n}"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
